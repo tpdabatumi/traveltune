@@ -8,6 +8,15 @@
   cursor: pointer;
 }
 
+.answer-container {
+  transition: 0.3s;
+}
+
+.answer-container:hover {
+  background-color: bisque !important;
+  text-decoration: underline;
+}
+
 @media screen and (max-width: 767px) {
   .tune-img {
     height: 300px;
