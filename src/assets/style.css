@@ -1,0 +1,19 @@
+.tune-img {
+  width: 100%;
+  height: 100vh;
+  object-fit: cover;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+@media screen and (max-width: 767px) {
+  .tune-img {
+    height: 300px;
+  }
+
+  .min-vh-100 {
+    min-height: 60vh !important;
+  }
+}
