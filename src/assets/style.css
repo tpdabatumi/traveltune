@@ -14,7 +14,7 @@
 
 .answer-container:hover,
 .answer-container:active {
-  background-color: bisque !important;
+  background-color: #ffca2c !important;
   text-decoration: underline;
 }
 

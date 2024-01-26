@@ -20,14 +20,6 @@ export default function WelcomeScreen({ setStarted, setLoading }) {
       setWelcome(data);
     } catch (err) {
       console.log(err);
-      // eslint-disable-next-line no-undef
-      Swal.fire({
-        title: "Server error",
-        text: "Please, reload this page and try again.",
-        icon: "error",
-        showCloseButton: true,
-        showConfirmButton: false,
-      });
     } finally {
       setLoading(false);
     }

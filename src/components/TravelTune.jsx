@@ -2,22 +2,51 @@ import { useEffect, useState } from "react";
 import { questionsData } from "../services/ApiService";
 import LoadingSpinner from "./LoadingSpinner";
 import WelcomeScreen from "./WelcomeScreen";
-import { calculatePersonality } from "../helpers/calculations";
+import {
+  calculateAccommodation,
+  calculateBudget,
+  calculateFood,
+  calculatePersonality,
+  calculateSeason,
+  calculateSocial,
+  calculateDuration,
+} from "../helpers/calculations";
+import { personalitiesData } from "../services/ApiService";
+import PersonalityScreen from "./PersonalityScreen";
 
 export default function TravelTune() {
   const [questions, setQuestions] = useState([]);
   const [answered, setAnswered] = useState([]);
+  const [personalities, setPersonalities] = useState([]);
+  const [data, setData] = useState({});
   const [index, setIndex] = useState(0);
   const [loading, setLoading] = useState(false);
   const [started, setStarted] = useState(false);
+  const [finished, setFinished] = useState(false);
   const lastIndex = questions.length - 1;
   const lessThanLastIndex = index < lastIndex;
 
   useEffect(() => {
-    if (started) getQuestions();
+    if (started) {
+      getQuestions();
+      getPersonalities();
+    }
 
-    return () => setQuestions([]);
+    return () => {
+      setQuestions([]);
+      setPersonalities([]);
+    };
   }, [started]);
+
+  const getPersonalities = async () => {
+    try {
+      const res = await personalitiesData();
+      const data = res.data.data;
+      setPersonalities(data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   const getQuestions = async () => {
     setLoading(true);
@@ -27,14 +56,6 @@ export default function TravelTune() {
       setQuestions(data);
     } catch (err) {
       console.log(err);
-      // eslint-disable-next-line no-undef
-      Swal.fire({
-        title: "Server error",
-        text: "Please, reload this page and try again.",
-        icon: "error",
-        showCloseButton: true,
-        showConfirmButton: false,
-      });
     } finally {
       setLoading(false);
     }
@@ -46,27 +67,37 @@ export default function TravelTune() {
   };
 
   const addNewAnswer = (data) => {
-    setAnswered([...answered, data]);
+    const answers = [...answered, data];
+    setAnswered(answers);
     nextQuestion();
-    if (index === lastIndex) submit();
+    if (index === lastIndex) submit(answers);
   };
 
-  const submit = () => {
-    // eslint-disable-next-line no-undef
-    Swal.fire({
-      title: "Quiz finished!",
-      text: "Thanks for answering the questions. Now we got your personal suggestions: %SUGGESTIONS%",
-      icon: "success",
-      showCloseButton: true,
-      showConfirmButton: false,
+  const submit = (answers) => {
+    setData({
+      personality: calculatePersonality(personalities, answers),
+      food: calculateFood(answers),
+      accommodation: calculateAccommodation(answers),
+      budget: calculateBudget(answers),
+      social: calculateSocial(answers),
+      duration: calculateDuration(answers),
+      season: calculateSeason(answers),
     });
-
-    console.log(calculatePersonality(answered));
 
     setAnswered([]);
     setIndex(0);
     setStarted(false);
+    setFinished(true);
   };
+
+  if (finished)
+    return (
+      <PersonalityScreen
+        setStarted={setStarted}
+        setFinished={setFinished}
+        data={data}
+      />
+    );
 
   if (!started)
     return (
