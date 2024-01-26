@@ -14,6 +14,8 @@ export default function TravelTune() {
 
   useEffect(() => {
     if (started) getQuestions();
+
+    return () => setQuestions([]);
   }, [started]);
 
   const getQuestions = async () => {

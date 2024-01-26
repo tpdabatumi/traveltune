@@ -7,6 +7,8 @@ export default function WelcomeScreen({ setStarted, setLoading }) {
 
   useEffect(() => {
     getWelcomeData();
+
+    return () => setWelcome({});
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
