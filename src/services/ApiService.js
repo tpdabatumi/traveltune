@@ -8,5 +8,6 @@ const instance = axios.create({
   },
 });
 
+export const welcomeData = () => instance.get("/welcome");
 export const questionsData = () => instance.get("/questions");
 export const personalitiesData = () => instance.get("/personalities");
