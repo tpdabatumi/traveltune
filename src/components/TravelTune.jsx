@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { questionsData } from "../services/ApiService";
 import LoadingSpinner from "./LoadingSpinner";
 import WelcomeScreen from "./WelcomeScreen";
+import { calculatePersonality } from "../helpers/calculations";
 
 export default function TravelTune() {
   const [questions, setQuestions] = useState([]);
@@ -59,6 +60,9 @@ export default function TravelTune() {
       showCloseButton: true,
       showConfirmButton: false,
     });
+
+    console.log(calculatePersonality(answered));
+
     setAnswered([]);
     setIndex(0);
     setStarted(false);
