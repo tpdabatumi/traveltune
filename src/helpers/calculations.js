@@ -6,7 +6,10 @@ export const calculatePersonality = (personalities, answers) => {
     if (personality.keyword === frequent) result = personality;
   });
 
-  return result;
+  return {
+    result,
+    keyword: frequent,
+  };
 };
 
 export const calculateFood = (answers) =>

@@ -36,7 +36,7 @@ export default function WelcomeScreen({ setStarted, setLoading }) {
         <div className="col-12 col-md-6 d-flex flex-column min-vh-100 bg-dark">
           <div className="col-12 m-auto p-4">
             <h4 className="display-6 text-white">{welcome.title}</h4>
-            <div className="mt-5">
+            <div className="mt-4">
               <p
                 className="text-white lead"
                 dangerouslySetInnerHTML={{ __html: welcome.text }}
