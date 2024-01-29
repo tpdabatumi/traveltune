@@ -1,14 +1,10 @@
 import { WEBSITE_URL } from "../config/settings";
 
 /* eslint-disable react/prop-types */
-export default function PersonalityScreen({
-  setFinished,
-  setSuggestionsId,
-  data,
-}) {
+export default function PersonalityScreen({ setFinished, setData, data }) {
   const handleSetFinished = () => {
     setFinished(false);
-    setSuggestionsId(null);
+    setData({});
   };
 
   return (

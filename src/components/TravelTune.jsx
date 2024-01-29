@@ -23,7 +23,6 @@ export default function TravelTune() {
   const [loading, setLoading] = useState(false);
   const [started, setStarted] = useState(false);
   const [finished, setFinished] = useState(false);
-  const [suggestionsId, setSuggestionsId] = useState(null);
   const lastIndex = questions.length - 1;
   const lessThanLastIndex = index < lastIndex;
 
@@ -65,9 +64,36 @@ export default function TravelTune() {
   const getSuggestions = async (payload) => {
     setLoading(true);
     try {
-      const res = await suggestions(payload);
-      const data = res.data.data;
-      setSuggestionsId(data.id);
+      const res = await suggestions({
+        answers: JSON.stringify(answered),
+        personality: payload.personality.keyword,
+        food: payload.food,
+        accommodation: payload.accommodation,
+        budget: payload.budget,
+        social: payload.social,
+        duration: payload.duration,
+        season: payload.season,
+      });
+
+      if (res.status === 201) {
+        const data = res.data.data;
+
+        setData({
+          id: data.id,
+          personality: payload.personality,
+          food: payload.food,
+          accommodation: payload.accommodation,
+          budget: payload.budget,
+          social: payload.social,
+          duration: payload.duration,
+          season: payload.season,
+        });
+
+        setAnswered([]);
+        setIndex(0);
+        setStarted(false);
+        setFinished(true);
+      }
     } catch (err) {
       console.log(err);
     } finally {
@@ -98,28 +124,14 @@ export default function TravelTune() {
       season: calculateSeason(answers),
     };
 
-    setData({
-      id: suggestionsId,
-      personality: calculations.personality,
-      food: calculations.food,
-      accommodation: calculations.accommodation,
-      budget: calculations.budget,
-      social: calculations.social,
-      duration: calculations.duration,
-      season: calculations.season,
-    });
-
-    setAnswered([]);
-    setIndex(0);
-    setStarted(false);
-    setFinished(true);
+    getSuggestions(calculations);
   };
 
   if (finished)
     return (
       <PersonalityScreen
         setFinished={setFinished}
-        setSuggestionsId={setSuggestionsId}
+        setData={setData}
         data={data}
       />
     );
