@@ -1,3 +1,5 @@
+import { WEBSITE_URL } from "../config/settings";
+
 /* eslint-disable react/prop-types */
 export default function PersonalityScreen({ setFinished, data }) {
   const handleSetFinished = () => setFinished(false);
@@ -46,11 +48,20 @@ export default function PersonalityScreen({ setFinished, data }) {
                 </p>
               </div>
             </div>
-            <div className="mt-5">
+            <div className="mt-5 d-flex gap-1 flex-wrap">
+              <a
+                rel="noreferrer"
+                href={`${WEBSITE_URL}/${data.id}`}
+                target="_blank"
+                type="button"
+                className="btn btn-warning rounded-0 px-4 py-3 fs-5"
+              >
+                View suggestions 🎉
+              </a>
               <button
                 onClick={handleSetFinished}
                 type="button"
-                className="btn btn-warning rounded-0 px-4 py-3 fs-5"
+                className="btn btn-dark rounded-0 px-4 py-3 fs-5"
               >
                 ⬅️ Retake Quiz
               </button>

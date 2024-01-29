@@ -75,6 +75,7 @@ export default function TravelTune() {
 
   const submit = (answers) => {
     setData({
+      id: 1, // TODO: id should be dynamic from api request
       personality: calculatePersonality(personalities, answers),
       food: calculateFood(answers),
       accommodation: calculateAccommodation(answers),
