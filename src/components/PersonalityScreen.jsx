@@ -1,8 +1,15 @@
 import { WEBSITE_URL } from "../config/settings";
 
 /* eslint-disable react/prop-types */
-export default function PersonalityScreen({ setFinished, data }) {
-  const handleSetFinished = () => setFinished(false);
+export default function PersonalityScreen({
+  setFinished,
+  setSuggestionsId,
+  data,
+}) {
+  const handleSetFinished = () => {
+    setFinished(false);
+    setSuggestionsId(null);
+  };
 
   return (
     <div className="container-fluid bg-dark">
@@ -24,29 +31,6 @@ export default function PersonalityScreen({ setFinished, data }) {
               <p className="text-white lead fs-4">
                 {data.personality.result.about}
               </p>
-              <div className="text-white mt-5">
-                <p className="mb-0">
-                  <strong>Personality:</strong> {data.personality.keyword}
-                </p>
-                <p className="mb-0">
-                  <strong>Food:</strong> {data.food}
-                </p>
-                <p className="mb-0">
-                  <strong>Accommodation:</strong> {data.accommodation}
-                </p>
-                <p className="mb-0">
-                  <strong>Budget:</strong> {data.budget}
-                </p>
-                <p className="mb-0">
-                  <strong>Social:</strong> {data.social}
-                </p>
-                <p className="mb-0">
-                  <strong>Duration:</strong> {data.duration}
-                </p>
-                <p className="mb-0">
-                  <strong>Season:</strong> {data.season}
-                </p>
-              </div>
             </div>
             <div className="mt-5 d-flex gap-1 flex-wrap">
               <a

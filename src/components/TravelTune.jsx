@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { questionsData } from "../services/ApiService";
+import { questionsData, suggestions } from "../services/ApiService";
 import LoadingSpinner from "./LoadingSpinner";
 import WelcomeScreen from "./WelcomeScreen";
 import {
@@ -23,6 +23,7 @@ export default function TravelTune() {
   const [loading, setLoading] = useState(false);
   const [started, setStarted] = useState(false);
   const [finished, setFinished] = useState(false);
+  const [suggestionsId, setSuggestionsId] = useState(null);
   const lastIndex = questions.length - 1;
   const lessThanLastIndex = index < lastIndex;
 
@@ -61,6 +62,19 @@ export default function TravelTune() {
     }
   };
 
+  const getSuggestions = async (payload) => {
+    setLoading(true);
+    try {
+      const res = await suggestions(payload);
+      const data = res.data.data;
+      setSuggestionsId(data.id);
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const nextQuestion = () => {
     let num = index;
     if (lessThanLastIndex) setIndex((num += 1));
@@ -74,8 +88,7 @@ export default function TravelTune() {
   };
 
   const submit = (answers) => {
-    setData({
-      id: 1, // TODO: id should be dynamic from api request
+    const calculations = {
       personality: calculatePersonality(personalities, answers),
       food: calculateFood(answers),
       accommodation: calculateAccommodation(answers),
@@ -83,6 +96,17 @@ export default function TravelTune() {
       social: calculateSocial(answers),
       duration: calculateDuration(answers),
       season: calculateSeason(answers),
+    };
+
+    setData({
+      id: suggestionsId,
+      personality: calculations.personality,
+      food: calculations.food,
+      accommodation: calculations.accommodation,
+      budget: calculations.budget,
+      social: calculations.social,
+      duration: calculations.duration,
+      season: calculations.season,
     });
 
     setAnswered([]);
@@ -94,8 +118,8 @@ export default function TravelTune() {
   if (finished)
     return (
       <PersonalityScreen
-        setStarted={setStarted}
         setFinished={setFinished}
+        setSuggestionsId={setSuggestionsId}
         data={data}
       />
     );
