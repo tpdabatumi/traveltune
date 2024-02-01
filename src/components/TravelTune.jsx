@@ -4,12 +4,9 @@ import LoadingSpinner from "./LoadingSpinner";
 import WelcomeScreen from "./WelcomeScreen";
 import {
   calculateAccommodation,
-  calculateBudget,
   calculateFood,
   calculatePersonality,
   calculateSeason,
-  calculateSocial,
-  calculateDuration,
 } from "../helpers/calculations";
 import { personalitiesData } from "../services/ApiService";
 import PersonalityScreen from "./PersonalityScreen";
@@ -69,9 +66,6 @@ export default function TravelTune() {
         personality: payload.personality.keyword,
         food: payload.food,
         accommodation: payload.accommodation,
-        budget: payload.budget,
-        social: payload.social,
-        duration: payload.duration,
         season: payload.season,
       });
 
@@ -83,9 +77,6 @@ export default function TravelTune() {
           personality: payload.personality,
           food: payload.food,
           accommodation: payload.accommodation,
-          budget: payload.budget,
-          social: payload.social,
-          duration: payload.duration,
           season: payload.season,
         });
 
@@ -118,9 +109,6 @@ export default function TravelTune() {
       personality: calculatePersonality(personalities, answers),
       food: calculateFood(answers),
       accommodation: calculateAccommodation(answers),
-      budget: calculateBudget(answers),
-      social: calculateSocial(answers),
-      duration: calculateDuration(answers),
       season: calculateSeason(answers),
     };
 

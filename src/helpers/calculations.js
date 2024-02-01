@@ -16,12 +16,6 @@ export const calculateFood = (answers) =>
   mostFrequentValue(getKeywordsByType(answers, "food"));
 export const calculateAccommodation = (answers) =>
   mostFrequentValue(getKeywordsByType(answers, "accommodation"));
-export const calculateBudget = (answers) =>
-  mostFrequentValue(getKeywordsByType(answers, "budget"));
-export const calculateSocial = (answers) =>
-  mostFrequentValue(getKeywordsByType(answers, "social"));
-export const calculateDuration = (answers) =>
-  mostFrequentValue(getKeywordsByType(answers, "duration"));
 export const calculateSeason = (answers) =>
   mostFrequentValue(getKeywordsByType(answers, "season"));
 
